@@ -11,25 +11,24 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student {
+public class Lecturer {
 
 
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "lecturer_sequence",
+            sequenceName = "lecturer_sequence",
             allocationSize = 1
     )
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "lecturer_sequence"
     )
-    private Long studentId;
+    private Long lecturerId;
 
     @Column(nullable = false)
     private String fullName;
-    @Column(nullable = false)
-    private int level;
+
 
 
 //    @OneToOne
@@ -39,23 +38,23 @@ public class Student {
 //    )
 //    private Programme programme;
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Course> getCoursesTaught() {
+        return courses_Taught;
     }
 
     @ManyToMany
     @JoinTable(
-            name = "student_course_mapping",
+            name = "lecturer_course_mapping",
             joinColumns = @JoinColumn(nullable = false,
-                    name="student_id",
-                    referencedColumnName = "studentId"
+                    name="lecturer_id",
+                    referencedColumnName = "lecturerId"
             ),
             inverseJoinColumns = @JoinColumn(nullable = false,
                     name ="course_id",
                     referencedColumnName = "courseId"
             )
     )
-    private List<Course> courses;
+    private List<Course> courses_Taught;
 
 
 

@@ -8,40 +8,80 @@ import javax.persistence.*;
 import java.util.List;
 
 
+
+@Entity
 @Getter
 @Setter
 //@EqualsAndHashCode//?
-@NoArgsConstructor
-@Entity
 public class Course {
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "course_sequence",
+            sequenceName = "course_sequence",
             allocationSize = 1
     )
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "course_sequence"
     )
     private Long courseId;
-    private String course_title;
-    private String course_code;
-    private Integer credits;
 
-    @ManyToMany
-    @JoinTable(
-            name = "student_course_mapping",
-            joinColumns = @JoinColumn(
-                    name="course_id",
-                    referencedColumnName = "courseId"
-                    ),
-            inverseJoinColumns = @JoinColumn(
-                    name ="student_id",
-                    referencedColumnName = "studentId"
-                    )
-    )
-    private List<Student> students;
+    @Column(nullable = false)
+    private String course_title;
+
+    @Column(nullable = false)
+    private String course_code;
+
+    public Course(Long courseId, String course_title, String course_code, Integer credits) {
+        this.courseId = courseId;
+        this.course_title = course_title;
+        this.course_code = course_code;
+        this.credits = credits;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public Course() {
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getCourse_title() {
+        return course_title;
+    }
+
+    public void setCourse_title(String course_title) {
+        this.course_title = course_title;
+    }
+
+    public String getCourse_code() {
+        return course_code;
+    }
+
+    public void setCourse_code(String course_code) {
+        this.course_code = course_code;
+    }
+
+    public Integer getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Integer credits) {
+        this.credits = credits;
+    }
+
+    public Course(String course_title, String course_code, Integer credits) {
+        this.course_title = course_title;
+        this.course_code = course_code;
+        this.credits = credits;
+    }
+
+    @Column(nullable = false)
+    private Integer credits;
 
 
 
