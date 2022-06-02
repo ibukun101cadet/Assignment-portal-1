@@ -38,7 +38,7 @@ public class Lecturer {
 //    )
 //    private Programme programme;
 
-    public List<Course> getCoursesTaught() {
+    public List<Course> getCourses_Taught() {
         return courses_Taught;
     }
 

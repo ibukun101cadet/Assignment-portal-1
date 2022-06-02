@@ -18,7 +18,10 @@ public interface StudentService {
     public List<Course> getAllCourses(Long studentId);
 
 
-    Course getACourse(String course_code);
 
     public void addCourseToStudent(String fullName, List<String> course_list);
+
+    public void deleteCourseFromStudent(String fullName, String course_code);
+
 }
+

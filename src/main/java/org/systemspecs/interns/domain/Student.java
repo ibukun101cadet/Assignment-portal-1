@@ -31,6 +31,9 @@ public class Student {
     @Column(nullable = false)
     private int level;
 
+    @Column(nullable = false)
+    private String matricNo;
+
 
 //    @OneToOne
 //            @JoinColumn(nullable = false,
@@ -57,6 +60,10 @@ public class Student {
     )
     private List<Course> courses;
 
+//    @OneToOne
+//    @JoinColumn(name = "student_id",
+//            referencedColumnName = "studentId")
+//    private AssignmentSubmission assignmentSubmission;
 
 
 

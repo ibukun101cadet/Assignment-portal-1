@@ -3,13 +3,11 @@ package org.systemspecs.interns.service.serviceimpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.systemspecs.interns.domain.Course;
+import org.systemspecs.interns.domain.AssignmentUpload;
 import org.systemspecs.interns.domain.Lecturer;
-import org.systemspecs.interns.domain.Student;
 import org.systemspecs.interns.repository.CourseRepo;
 import org.systemspecs.interns.repository.LecturerRepo;
-import org.systemspecs.interns.repository.StudentRepo;
 import org.systemspecs.interns.service.LecturerService;
-import org.systemspecs.interns.service.StudentService;
 
 import java.util.List;
 
@@ -48,6 +46,22 @@ public class LecturerServiceImpl implements LecturerService {
         };
 
     }
+
+    @Override
+    public void deleteCourseFromLecturer(String fullName, String course_code) {
+        Lecturer lecturer = repo.findByFullName(fullName);
+        Course course = course_repo.findByCode(course_code);
+        lecturer.getCourses_Taught().remove(course);
+
+
+    }
+
+    @Override
+    public void uploadAssignment(String course_code, List<AssignmentUpload> assignments) {
+
+    }
+
+
 
 
 }

@@ -1,7 +1,6 @@
 package org.systemspecs.interns.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -31,6 +30,14 @@ public class Course {
 
     @Column(nullable = false)
     private String course_code;
+
+    @Column(nullable = false)
+    private Integer credits;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    private List<AssignmentUpload> course_assignments;
+
 
     public Course(Long courseId, String course_title, String course_code, Integer credits) {
         this.courseId = courseId;
@@ -80,9 +87,12 @@ public class Course {
         this.credits = credits;
     }
 
-    @Column(nullable = false)
-    private Integer credits;
 
 
 
+
+    public List<AssignmentUpload> getCourse_assignments() {
+        return course_assignments;
+    }
 }
+

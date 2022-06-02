@@ -32,10 +32,6 @@ public class StudentServiceImpl implements StudentService {
         return repo.findCoursesById(studentId);
     }
 
-    @Override
-    public Course getACourse(String course_code) {
-        return course_repo.findByCode(course_code);
-    }
 
     @Override
     public void addCourseToStudent(String fullName, List<String> course_list) {
@@ -48,6 +44,14 @@ public class StudentServiceImpl implements StudentService {
                 student.getCourses().add(course);
             }
         };
+    }
+
+    @Override
+    public void deleteCourseFromStudent(String fullName, String course_code) {
+        Student student = repo.findByFullName(fullName);
+        Course course = course_repo.findByCode(course_code);
+        student.getCourses().remove(course);
+
     }
 
 }

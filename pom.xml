@@ -13,13 +13,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Interns School App</name>
 	<description>Interns School App</description>
-	<properties>
-		<java.version>11</java.version>
-		<groupId>org.projectlombok</groupId>
-		<artifactId>lombok</artifactId>
-		<optional>true</optional>
+<!--	<properties>-->
+<!--		<java.version>11</java.version>-->
+<!--		<groupId>org.projectlombok</groupId>-->
+<!--		<artifactId>lombok</artifactId>-->
+<!--		<optional>false</optional>-->
 
-	</properties>
+<!--	</properties>-->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
