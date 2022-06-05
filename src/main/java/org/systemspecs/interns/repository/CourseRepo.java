@@ -10,12 +10,10 @@ import java.util.List;
 
 public interface CourseRepo extends JpaRepository<Course, Long> {
 
-//    @Query("SELECT c FROM Course c WHERE c.course_title=?1")
-//    Course findByTitle(String course_title);
     @Query("SELECT c FROM Course c WHERE c.course_code=?1")
     Course findByCode(String course_code);
 
     @Query("SELECT c.course_assignments FROM Course c WHERE c.course_code=?1")
-    List<AssignmentUpload> findassignmentbyCode(String course_code);
+    List<AssignmentUpload> findAssignmentsByCode(String course_code);
 
 }

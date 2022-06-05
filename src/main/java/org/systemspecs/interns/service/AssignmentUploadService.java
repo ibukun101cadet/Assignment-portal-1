@@ -9,16 +9,12 @@ import java.io.IOException;
 @Service
 public interface AssignmentUploadService {
 
+    void uploadAssignment(MultipartFile file, String assignmentTitle, String dueDate, Long courseId);
 
+    AssignmentUpload getAssignmentUploadById(Long assignmentId);
 
+    String updateAssignmentUpload(Long assignmentId, String docName, MultipartFile file) throws IOException;
 
-
-    void saveFile(MultipartFile file, Long courseId);
-
-    AssignmentUpload getById(Long assignmentId);
-
-
-    String updateAssignment(Long assignmentId, String docName, MultipartFile file) throws IOException;
 //    public Optional<Course_assignment> getFile(Long fileId){
 //        return repo.findById(fileId);
 //

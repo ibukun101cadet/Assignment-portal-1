@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 
 @Entity
 @Getter
 @Setter
-//@EqualsAndHashCode//?
+
 
 public class AssignmentUpload {
     public Long getAssignmentUploadId() {
@@ -31,37 +32,52 @@ public class AssignmentUpload {
     private Long assignmentUploadId;
     @Column(nullable = false)
 
-    private String docName;
+
+    private String assignmentTitle;
 
     private String docType;
 
     @Lob
     private byte[] content;
 
+
+    private LocalDate dueDate;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id",
+            nullable = false)
+    @JsonIgnore
+    private Course course;
+
+    @OneToMany(mappedBy = "assignmentUpload", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AssignmentSubmission> assignmentSubmissions;
+
     public AssignmentUpload() {
     }
 
-    public AssignmentUpload(Long assignmentUploadId, String docName, String docType, byte[] content, Course course) {
+    public AssignmentUpload(Long assignmentUploadId, String AssignmentTitle, String docType, byte[] content, LocalDate dueDate, Course course) {
         this.assignmentUploadId = assignmentUploadId;
-        this.docName = docName;
+        this.assignmentTitle = AssignmentTitle;
         this.docType = docType;
         this.content = content;
+        this.dueDate = dueDate;
         this.course = course;
     }
 
-    public AssignmentUpload(String docName, String docType, byte[] content, Course course) {
-        this.docName = docName;
+    public AssignmentUpload(String AssignmentTitle, String docType, byte[] content, LocalDate dueDate, Course course) {
+        this.assignmentTitle = AssignmentTitle;
         this.docType = docType;
         this.content = content;
+        this.dueDate = dueDate;
         this.course = course;
     }
 
-    public String getDocName() {
-        return docName;
+    public String getAssignmentTitle() {
+        return assignmentTitle;
     }
 
-    public void setDocName(String docName) {
-        this.docName = docName;
+    public void setAssignmentTitle(String assignmentTitle) {
+        this.assignmentTitle = assignmentTitle;
     }
 
     public String getDocType() {
@@ -80,12 +96,13 @@ public class AssignmentUpload {
         this.content = content;
     }
 
-    //    private String submission_status;//can be enum?
-//
-//    private String grading_status;//also enum?
-//    private Date due_date;
-//    private Date uploadTime;
-// TODO: SET UPLOAD TIME AND DUE DATE AND TIME REMAINING
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public List<AssignmentSubmission> getAssignmentSubmissions() {
         return assignmentSubmissions;
@@ -99,14 +116,8 @@ public class AssignmentUpload {
         this.course = course;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "course_id",
-            nullable = false)
-    @JsonIgnore
-    private Course course;
 
-    @OneToMany(mappedBy = "assignmentUpload", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AssignmentSubmission> assignmentSubmissions;
+// TODO: SET UPLOAD TIME AND DUE DATE AND TIME REMAINING
 
 
 

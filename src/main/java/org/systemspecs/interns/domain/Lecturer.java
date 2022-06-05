@@ -30,14 +30,6 @@ public class Lecturer {
     private String fullName;
 
 
-
-//    @OneToOne
-//            @JoinColumn(nullable = false,
-//            name ="programme_title",
-//            referencedColumnName = "programme_title"
-//    )
-//    private Programme programme;
-
     public List<Course> getCourses_Taught() {
         return courses_Taught;
     }

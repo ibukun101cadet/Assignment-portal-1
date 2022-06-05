@@ -21,11 +21,11 @@ public class LecturerServiceImpl implements LecturerService {
     private final CourseRepo course_repo;
 
 
-    public LecturerServiceImpl(LecturerRepo repo, CourseRepo course_repo) {
+    public LecturerServiceImpl(LecturerRepo repo,
+                               CourseRepo course_repo) {
         this.repo = repo;
         this.course_repo = course_repo;
     }
-
 
 
     @Override
@@ -52,16 +52,7 @@ public class LecturerServiceImpl implements LecturerService {
         Lecturer lecturer = repo.findByFullName(fullName);
         Course course = course_repo.findByCode(course_code);
         lecturer.getCourses_Taught().remove(course);
-
-
     }
-
-    @Override
-    public void uploadAssignment(String course_code, List<AssignmentUpload> assignments) {
-
-    }
-
-
 
 
 }

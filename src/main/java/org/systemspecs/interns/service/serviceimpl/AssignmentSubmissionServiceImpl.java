@@ -13,6 +13,7 @@ import org.systemspecs.interns.service.AssignmentSubmissionService;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 
@@ -21,72 +22,93 @@ import java.util.List;
 public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionService {
 
 
-    private final AssignmentSubmissionRepo assignmentRepo;
     private final AssignmentUploadRepo assignmentUploadRepo;
     private final AssignmentSubmissionRepo assignmentSubmissionRepo;
 
 
-    public AssignmentSubmissionServiceImpl(AssignmentSubmissionRepo assignmentRepo, AssignmentUploadRepo assignmentUploadRepo, AssignmentSubmissionRepo assignmentSubmissionRepo) {
-        this.assignmentRepo = assignmentRepo;
+    public AssignmentSubmissionServiceImpl(AssignmentUploadRepo assignmentUploadRepo,
+                                           AssignmentSubmissionRepo assignmentSubmissionRepo) {
+
         this.assignmentUploadRepo = assignmentUploadRepo;
         this.assignmentSubmissionRepo = assignmentSubmissionRepo;
     }
 
     @Override
-    public AssignmentSubmission saveFile(MultipartFile file, Long assignmentId, String matricNo) {
+    public AssignmentSubmission submitAssignment(MultipartFile file,
+                                                 Long assignmentId,
+                                                 String matricNo) {
         AssignmentUpload uploaded = assignmentUploadRepo.findById(assignmentId).get();
         AssignmentSubmission assignment = null;
         try {
-            assignment = new AssignmentSubmission(StringUtils.cleanPath(file.getOriginalFilename()), matricNo, file.getBytes(), file.getContentType(), "Submitted for grading", null, LocalDateTime.now(), uploaded);
+            assignment = new AssignmentSubmission(StringUtils.cleanPath(
+                    file.getOriginalFilename()),
+                    matricNo,
+                    file.getBytes(),
+                    file.getContentType(),
+                    "Submitted for grading",
+                    "Not graded",
+                    null,
+                    LocalDateTime.now(),
+                    uploaded);
             uploaded.getAssignmentSubmissions().add(assignment);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return assignment;
+        return assignment;//one to one btwn student?
     }
 
 
     @Override
-    public AssignmentSubmission getById(Long assignmentId) {
-        return assignmentRepo.findById(assignmentId).get();
+    public AssignmentSubmission getAssignmentSubmissionById(Long assignmentId) {
+        AssignmentSubmission assignmentSubmission;
+        try {
+            assignmentSubmission = assignmentSubmissionRepo.findById(assignmentId).get();
+        } catch (Exception e) {
+            throw new NoSuchElementException("Student has not submitted");
+        }
+        return assignmentSubmission;
+
     }
 
     @Override
     public List<AssignmentSubmission> viewAllSubmissions(Long assignmentUploadId) {
-        return
-                assignmentSubmissionRepo.findByAssignmentUpload(assignmentUploadRepo
-                        .findById(assignmentUploadId).get());
 
-
+        return assignmentSubmissionRepo.findByAssignmentUpload(
+                assignmentUploadRepo.findById(assignmentUploadId).get());
     }
 
     @Override
     public void addGrade(Long assignmentId, String grade) {
         AssignmentSubmission assignmentSubmission =
                 assignmentSubmissionRepo.findById(assignmentId).get();
-
         assignmentSubmission.setGrade(grade);
-
+        assignmentSubmission.setGradingStatus("Graded");
     }
-
 
     @Override
     public void updateGrade(Long assignmentId, String grade) {
         AssignmentSubmission assignmentSubmission =
                 assignmentSubmissionRepo.findById(assignmentId).get();
-
         assignmentSubmission.setGrade(grade);
     }
 
     @Override
-    public void updateAssignment(Long assignmentId, MultipartFile file) throws IOException {
-        AssignmentSubmission assignmentSubmission = assignmentSubmissionRepo.findById(assignmentId).get();
+    public void updateAssignmentSubmission(Long assignmentId,
+                                           MultipartFile file)
+            throws IOException {
+        AssignmentSubmission assignmentSubmission =
+                assignmentSubmissionRepo.findById(assignmentId).get();
         assignmentSubmission.setDocName(file.getName());
         assignmentSubmission.setDocType(file.getContentType());
         assignmentSubmission.setContent(file.getBytes());
+    }
 
-
+    @Override
+    public String checkGrade(Long assignmentId) {
+        AssignmentSubmission assignmentSubmission =
+                assignmentSubmissionRepo.findById(assignmentId).get();
+        return assignmentSubmission.getGrade();
     }
 }
 

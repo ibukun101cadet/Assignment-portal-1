@@ -10,13 +10,9 @@ import java.util.List;
 @Service
 public interface AssignmentSubmissionService {
 
+    AssignmentSubmission submitAssignment(MultipartFile file, Long assignmentId, String matNo);
 
-
-
-
-    AssignmentSubmission saveFile(MultipartFile file, Long assignmentId, String matNo);
-
-    AssignmentSubmission getById(Long assignmentId);
+    AssignmentSubmission getAssignmentSubmissionById(Long assignmentId);
 
     List<AssignmentSubmission> viewAllSubmissions(Long assignmentUploadId);
 
@@ -24,7 +20,9 @@ public interface AssignmentSubmissionService {
 
     void updateGrade(Long assignmentId, String grade);
 
-    void updateAssignment(Long assignmentId, MultipartFile file) throws IOException;
+    void updateAssignmentSubmission(Long assignmentId, MultipartFile file) throws IOException;
+
+    String checkGrade(Long assignmentId);
 //    public Optional<Course_assignment> getFile(Long fileId){
 //        return repo.findById(fileId);
 //

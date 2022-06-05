@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public interface CourseService {
 
-    Course getACourse(String course_code);
+    Course getCourseByCourseCode(String course_code);
 
-    List<AssignmentUpload> getByAssignmentCourseCode(String course_code);
+    List<AssignmentUpload> getAllAssignmentsByCourseCode(String course_code);
 
 
 }

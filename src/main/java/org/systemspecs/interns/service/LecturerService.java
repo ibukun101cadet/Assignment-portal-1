@@ -10,14 +10,11 @@ import java.util.List;
 public interface LecturerService {
 
 
-    public List<Course> getAllCoursesTaught(Long lecturerId);
+    List<Course> getAllCoursesTaught(Long lecturerId);
 
+    void addCourseToLecturer(String fullName, List<String> course_list);
 
-    public void addCourseToLecturer(String fullName, List<String> course_list);
-
-    public void deleteCourseFromLecturer(String fullName, String course_code);
-
-    public void uploadAssignment(String course_code, List<AssignmentUpload> assignments);
+    void deleteCourseFromLecturer(String fullName, String course_code);
 
 
 }

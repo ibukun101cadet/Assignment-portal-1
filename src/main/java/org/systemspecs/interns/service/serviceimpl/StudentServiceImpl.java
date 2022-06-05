@@ -25,10 +25,8 @@ public class StudentServiceImpl implements StudentService {
         this.course_repo = course_repo;
     }
 
-
-
     @Override
-    public List<Course> getAllCourses(Long studentId) {
+    public List<Course> getAllCoursesTaken(Long studentId) {
         return repo.findCoursesById(studentId);
     }
 

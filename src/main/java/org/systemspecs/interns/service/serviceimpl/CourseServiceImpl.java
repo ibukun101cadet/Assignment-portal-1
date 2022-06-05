@@ -17,22 +17,18 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepo course_repo;
 
-
     public CourseServiceImpl(CourseRepo course_repo) {
         this.course_repo = course_repo;
     }
 
-
-
-
     @Override
-    public Course getACourse(String course_code) {
+    public Course getCourseByCourseCode(String course_code) {
         return course_repo.findByCode(course_code);
     }
 
     @Override
-    public List<AssignmentUpload> getByAssignmentCourseCode(String course_code) {
-        return course_repo.findassignmentbyCode(course_code);
+    public List<AssignmentUpload> getAllAssignmentsByCourseCode(String course_code) {
+        return course_repo.findAssignmentsByCode(course_code);
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-//@EqualsAndHashCode//?
+
 public class Course {
     @SequenceGenerator(
             name = "course_sequence",
@@ -35,9 +35,11 @@ public class Course {
     private Integer credits;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
     private List<AssignmentUpload> course_assignments;
 
+
+    public Course() {
+    }
 
     public Course(Long courseId, String course_title, String course_code, Integer credits) {
         this.courseId = courseId;
@@ -46,11 +48,14 @@ public class Course {
         this.credits = credits;
     }
 
-    public Long getCourseId() {
-        return courseId;
+    public Course(String course_title, String course_code, Integer credits) {
+        this.course_title = course_title;
+        this.course_code = course_code;
+        this.credits = credits;
     }
 
-    public Course() {
+    public Long getCourseId() {
+        return courseId;
     }
 
     public void setCourseId(Long courseId) {
@@ -80,16 +85,6 @@ public class Course {
     public void setCredits(Integer credits) {
         this.credits = credits;
     }
-
-    public Course(String course_title, String course_code, Integer credits) {
-        this.course_title = course_title;
-        this.course_code = course_code;
-        this.credits = credits;
-    }
-
-
-
-
 
     public List<AssignmentUpload> getCourse_assignments() {
         return course_assignments;

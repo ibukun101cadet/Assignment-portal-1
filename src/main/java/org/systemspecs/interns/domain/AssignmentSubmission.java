@@ -6,17 +6,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 
 @Entity
 @Getter
 @Setter
-//@EqualsAndHashCode//?
+
 
 public class AssignmentSubmission {
-
-
 
     @SequenceGenerator(
             name = "student_course_assignment_submission_sequence",
@@ -28,34 +26,28 @@ public class AssignmentSubmission {
             strategy = GenerationType.SEQUENCE,
             generator = "student_course_assignment_submission_sequence"
     )
-    private Long assignmentSubmissionId;
-    @Column(nullable = false)
 
+    private Long assignmentSubmissionId;
+
+    @Column(nullable = false)
     private String docName;
 
-
+    @Column(nullable = false)
     private String matricNo;
 
     @Lob
     private byte[] content;
 
-
     private String docType;
 
-
-    private String status;
+    private String submissionStatus;
 
     private String grade;
 
-    private LocalDateTime dateCreated;
+    private String gradingStatus;
 
-    public AssignmentUpload getAssignmentUpload() {
-        return assignmentUpload;
-    }
+    private LocalDateTime lastModified;
 
-    public void setAssignmentUpload(AssignmentUpload assignmentUpload) {
-        this.assignmentUpload = assignmentUpload;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "assignmentUploadId",
@@ -63,27 +55,29 @@ public class AssignmentSubmission {
     @JsonIgnore
     private AssignmentUpload assignmentUpload;
 
+
     public AssignmentSubmission() {
     }
-
 
     public AssignmentSubmission(Long assignmentSubmissionId,
                                 String docName,
                                 String matricNo,
                                 byte[] content,
                                 String docType,
-                                String status,
+                                String submissionStatus,
+                                String gradingStatus,
                                 String grade,
-                                LocalDateTime dateCreated,
+                                LocalDateTime lastModified,
                                 AssignmentUpload assignmentUpload) {
         this.assignmentSubmissionId = assignmentSubmissionId;
         this.docName= docName;
         this.matricNo= matricNo;
         this.content= content;
         this.docType= docType;
-        this.status = status;
+        this.submissionStatus = submissionStatus;
+        this.gradingStatus = gradingStatus;
         this.grade = grade;
-        this.dateCreated = dateCreated;
+        this.lastModified = lastModified;
         this.assignmentUpload= assignmentUpload;
 
     }
@@ -92,17 +86,19 @@ public class AssignmentSubmission {
                                 String matricNo,
                                 byte[] content,
                                 String docType,
-                                String status,
+                                String submissionStatus,
+                                String gradingStatus,
                                 String grade,
-                                LocalDateTime dateCreated,
+                                LocalDateTime lastModified,
                                 AssignmentUpload assignmentUpload) {
         this.docName= docName;
         this.matricNo = matricNo;
         this.content= content;
         this.docType= docType;
-        this.status = status;
+        this.submissionStatus = submissionStatus;
+        this.gradingStatus = gradingStatus;
         this.grade = grade;
-        this.dateCreated = dateCreated;
+        this.lastModified = lastModified;
         this.assignmentUpload= assignmentUpload;
 
     }
@@ -110,6 +106,7 @@ public class AssignmentSubmission {
     public Long getAssignmentSubmissionId() {
         return assignmentSubmissionId;
     }
+
 
     public void setAssignmentSubmissionId(Long assignmentSubmissionId) {
         this.assignmentSubmissionId = assignmentSubmissionId;
@@ -122,12 +119,12 @@ public class AssignmentSubmission {
         this.docName = docName;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSubmissionStatus() {
+        return submissionStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSubmissionStatus(String submissionStatus) {
+        this.submissionStatus = submissionStatus;
     }
 
     public String getGrade() {
@@ -138,12 +135,12 @@ public class AssignmentSubmission {
         this.grade = grade;
     }
 
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
+    public LocalDateTime getLastModified() {
+        return lastModified;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setLastModified(LocalDateTime lastModified) {
+        this.lastModified = lastModified;
     }
 
     public byte[] getContent() {
@@ -170,7 +167,22 @@ public class AssignmentSubmission {
         this.docType = docType;
     }
 
-//TODO: CHECK IF ASSIGNMENT LATE OR EARLY
+    public AssignmentUpload getAssignmentUpload() {
+        return assignmentUpload;
+    }
+
+    public void setAssignmentUpload(AssignmentUpload assignmentUpload) {
+        this.assignmentUpload = assignmentUpload;
+    }
+
+    public String getGradingStatus() {
+        return gradingStatus;
+    }
+
+    public void setGradingStatus(String gradingStatus) {
+        this.gradingStatus = gradingStatus;
+    }
+//TODO: DUE DATE AND CHECK time remaining
 
 
 

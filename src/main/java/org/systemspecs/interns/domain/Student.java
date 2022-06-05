@@ -28,23 +28,12 @@ public class Student {
 
     @Column(nullable = false)
     private String fullName;
+
     @Column(nullable = false)
     private int level;
 
     @Column(nullable = false)
     private String matricNo;
-
-
-//    @OneToOne
-//            @JoinColumn(nullable = false,
-//            name ="programme_title",
-//            referencedColumnName = "programme_title"
-//    )
-//    private Programme programme;
-
-    public List<Course> getCourses() {
-        return courses;
-    }
 
     @ManyToMany
     @JoinTable(
@@ -59,6 +48,20 @@ public class Student {
             )
     )
     private List<Course> courses;
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+//    @OneToOne
+//            @JoinColumn(nullable = false,
+//            name ="programme_title",
+//            referencedColumnName = "programme_title"
+//    )
+//    private Programme programme;
+
+
+
 
 //    @OneToOne
 //    @JoinColumn(name = "student_id",

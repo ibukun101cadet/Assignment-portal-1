@@ -11,10 +11,9 @@ import java.util.List;
 
 public interface AssignmentSubmissionRepo extends JpaRepository<AssignmentSubmission, Long> {
 
-//    @Query("SELECT b FROM Book b WHERE b.library.id = :libraryId")
+
 
     @Query("SELECT a FROM AssignmentSubmission a WHERE a.assignmentUpload =?1")
-
     List<AssignmentSubmission> findByAssignmentUpload(AssignmentUpload assignmentUpload);
 
 

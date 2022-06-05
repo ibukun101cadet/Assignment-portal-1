@@ -6,6 +6,4 @@ import org.systemspecs.interns.domain.AssignmentUpload;
 
 public interface AssignmentUploadRepo extends JpaRepository<AssignmentUpload, Long> {
 
-
-
 }
