@@ -56,6 +56,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         }
 
         return assignment;//one to one btwn student?
+        //todo late submission
     }
 
 
@@ -102,6 +103,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         assignmentSubmission.setDocName(file.getName());
         assignmentSubmission.setDocType(file.getContentType());
         assignmentSubmission.setContent(file.getBytes());
+        assignmentSubmission.setLastModified(LocalDateTime.now());
     }
 
     @Override

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,17 +31,20 @@ public class AssignmentUpload {
             generator = "lecturer__course_assignment_upload_sequence"
     )
     private Long assignmentUploadId;
+
+
     @Column(nullable = false)
-
-
     private String assignmentTitle;
 
+    @Column(nullable = false)
     private String docType;
 
+
+    @Column(nullable = false)
     @Lob
     private byte[] content;
 
-
+    @FutureOrPresent(message = "Date must be in the future or present")
     private LocalDate dueDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

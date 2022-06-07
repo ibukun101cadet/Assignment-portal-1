@@ -30,10 +30,11 @@ public class AssignmentUploadServiceImpl implements AssignmentUploadService {
     }
 
     @Override
-    public void uploadAssignment(MultipartFile file,
-                                 String assignmentTitle,
-                                 String dueDate,
-                                 Long courseId) {
+    public AssignmentUpload uploadAssignment(MultipartFile file,
+                                             String assignmentTitle,
+                                             String dueDate,
+                                             Long courseId) {
+        AssignmentUpload assignment = null;
         {
             String title = assignmentTitle;
             LocalDate dateDue = LocalDate.parse(dueDate);
@@ -41,21 +42,18 @@ public class AssignmentUploadServiceImpl implements AssignmentUploadService {
             Course course = (repo.findById(courseId)).get();
 
             try {
-                AssignmentUpload assignment = new AssignmentUpload(title,
+                assignment = new AssignmentUpload(title,
                         file.getContentType(),
                         file.getBytes(),
                         dateDue,
                         course);
                 course.getCourse_assignments().add(assignment);
-            }
-
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
+        }
+        return assignment;
     }
-}
 
     @Override
     public AssignmentUpload getAssignmentUploadById(Long assignmentId) {

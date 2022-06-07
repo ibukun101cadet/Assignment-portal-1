@@ -9,7 +9,7 @@ import java.io.IOException;
 @Service
 public interface AssignmentUploadService {
 
-    void uploadAssignment(MultipartFile file, String assignmentTitle, String dueDate, Long courseId);
+    AssignmentUpload uploadAssignment(MultipartFile file, String assignmentTitle, String dueDate, Long courseId);
 
     AssignmentUpload getAssignmentUploadById(Long assignmentId);
 

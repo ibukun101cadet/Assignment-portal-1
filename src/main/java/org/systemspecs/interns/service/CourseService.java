@@ -11,6 +11,8 @@ public interface CourseService {
 
     Course getCourseByCourseCode(String course_code);
 
+    Course getCourseById(Long courseId);
+
     List<AssignmentUpload> getAllAssignmentsByCourseCode(String course_code);
 
 

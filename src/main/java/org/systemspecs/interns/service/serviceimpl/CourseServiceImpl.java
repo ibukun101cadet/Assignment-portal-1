@@ -27,6 +27,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Course getCourseById(Long courseId) {
+        return course_repo.findById(courseId).get();
+    }
+
+    @Override
     public List<AssignmentUpload> getAllAssignmentsByCourseCode(String course_code) {
         return course_repo.findAssignmentsByCode(course_code);
     }

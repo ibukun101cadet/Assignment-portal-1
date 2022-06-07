@@ -27,6 +27,7 @@ public class AssignmentSubmission {
             generator = "student_course_assignment_submission_sequence"
     )
 
+
     private Long assignmentSubmissionId;
 
     @Column(nullable = false)
@@ -36,16 +37,22 @@ public class AssignmentSubmission {
     private String matricNo;
 
     @Lob
+    @Column(nullable = false)
     private byte[] content;
 
+    @Column(nullable = false)
     private String docType;
 
+    @Column(nullable = false)
     private String submissionStatus;
+
 
     private String grade;
 
+    @Column(nullable = false)
     private String gradingStatus;
 
+    @Column(nullable = false)
     private LocalDateTime lastModified;
 
 

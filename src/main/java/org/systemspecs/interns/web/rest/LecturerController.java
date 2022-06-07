@@ -1,9 +1,11 @@
 package org.systemspecs.interns.web.rest;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.systemspecs.interns.domain.Course;
+import org.systemspecs.interns.dto.response.GenericResponse;
 import org.systemspecs.interns.service.LecturerService;
 
 
@@ -15,7 +17,6 @@ import java.util.List;
 public class LecturerController {
     private final LecturerService lecturerService;
 
-
     public LecturerController(LecturerService lecturerService) {
         this.lecturerService = lecturerService;
 
@@ -23,10 +24,26 @@ public class LecturerController {
 
 
     @GetMapping("/{lecturerId}/courses/")
-    public List<Course> getAllCoursesTaught(@PathVariable("lecturerId")Long lecturerId){
-        return lecturerService.getAllCoursesTaught(lecturerId);
+    public ResponseEntity<GenericResponse> getAllCoursesTaught(
+            @PathVariable("lecturerId")Long lecturerId){
+        System.out.println("getting all lecturer "+ lecturerId + " courses");
+
+        GenericResponse response = new GenericResponse();
+
+        response.setCode("00");
+        response.setMessage("success");
+        response.setData(lecturerService.getAllCoursesTaught(lecturerId));
+        response.setMetadata(null);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
+
+
+
+
+//not necessarily necessary
     @PostMapping("/add_courses")
     public ResponseEntity<?> addCoursesToLecturer(@RequestBody CourseToLecturer form){
         lecturerService.addCourseToLecturer(form.getFullName(), form.getCourse_list());
@@ -34,30 +51,13 @@ public class LecturerController {
 
     }
 
+    //not necessarily necessary
     @DeleteMapping("/{fullName}/remove/{course_code}")
     public void removeCourse(@PathVariable("course_code")String course_code,
                              @PathVariable("fullName")String fullName){
         lecturerService.deleteCourseFromLecturer(fullName, course_code);
     }
 
-}
-
-@Data
-class CourseToLecturer{
-    public CourseToLecturer() {
-    }
-
-    private String fullName;
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public List<String> getCourse_list() {
-        return course_list;
-    }
-
-    private List<String> course_list;
 }
 
 
