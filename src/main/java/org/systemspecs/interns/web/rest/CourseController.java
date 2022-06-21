@@ -6,15 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.systemspecs.interns.domain.AssignmentUpload;
-import org.systemspecs.interns.domain.Course;
-//import org.systemspecs.interns.service.AssignmentService;
-import org.systemspecs.interns.dto.ResponseData;
+import org.systemspecs.interns.dto.response.ResponseData;
 import org.systemspecs.interns.dto.response.GenericResponse;
 import org.systemspecs.interns.service.AssignmentUploadService;
 import org.systemspecs.interns.service.CourseService;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/course")
@@ -44,7 +41,6 @@ public class CourseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-//this!!
     @PostMapping("/{courseId}/uploadAssignment")
     public ResponseEntity<GenericResponse> uploadAssignments(@PathVariable("courseId")Long courseId,
                                   @RequestParam("file") MultipartFile file,

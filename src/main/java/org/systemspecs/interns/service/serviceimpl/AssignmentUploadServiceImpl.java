@@ -10,7 +10,9 @@ import org.systemspecs.interns.repository.CourseRepo;
 import org.systemspecs.interns.service.AssignmentUploadService;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 
@@ -37,8 +39,17 @@ public class AssignmentUploadServiceImpl implements AssignmentUploadService {
         AssignmentUpload assignment = null;
         {
             String title = assignmentTitle;
-            LocalDate dateDue = LocalDate.parse(dueDate);
 
+            LocalDateTime dateDue = LocalDateTime.parse(dueDate);
+//            Duration duration = Duration.between(dateDue, LocalDateTime.now());
+//
+//            long timeInSeconds = duration.getSeconds();
+//            int days =  (int) (timeInSeconds / 86400);
+//            int hours = (int) ((timeInSeconds % 3600)/3600);
+//
+//            if (days == 0 & hours ==0){
+//                String actualTime = (days +" days," + hours + " hours");
+//            }
             Course course = (repo.findById(courseId)).get();
 
             try {
@@ -46,6 +57,7 @@ public class AssignmentUploadServiceImpl implements AssignmentUploadService {
                         file.getContentType(),
                         file.getBytes(),
                         dateDue,
+                        LocalDateTime.now(),
                         course);
                 course.getCourse_assignments().add(assignment);
             } catch (IOException e) {

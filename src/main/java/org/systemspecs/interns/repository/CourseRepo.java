@@ -16,4 +16,5 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
     @Query("SELECT c.course_assignments FROM Course c WHERE c.course_code=?1")
     List<AssignmentUpload> findAssignmentsByCode(String course_code);
 
+
 }

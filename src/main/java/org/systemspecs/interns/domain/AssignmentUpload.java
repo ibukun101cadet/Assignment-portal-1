@@ -6,7 +6,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -16,10 +20,6 @@ import java.util.List;
 
 
 public class AssignmentUpload {
-    public Long getAssignmentUploadId() {
-        return assignmentUploadId;
-    }
-
     @SequenceGenerator(
             name = "lecturer__course_assignment_upload_sequence",
             sequenceName = "lecturer__course_assignment_upload_sequence",
@@ -45,7 +45,10 @@ public class AssignmentUpload {
     private byte[] content;
 
     @FutureOrPresent(message = "Date must be in the future or present")
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
+
+
+    private LocalDateTime uploadTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "course_id",
@@ -59,21 +62,38 @@ public class AssignmentUpload {
     public AssignmentUpload() {
     }
 
-    public AssignmentUpload(Long assignmentUploadId, String AssignmentTitle, String docType, byte[] content, LocalDate dueDate, Course course) {
+    public AssignmentUpload(Long assignmentUploadId,
+                            String AssignmentTitle,
+                            String docType,
+                            byte[] content,
+                            LocalDateTime uploadTime,
+                            LocalDateTime dueDate,
+                            Course course) {
         this.assignmentUploadId = assignmentUploadId;
         this.assignmentTitle = AssignmentTitle;
         this.docType = docType;
+        this.uploadTime = uploadTime;
         this.content = content;
         this.dueDate = dueDate;
         this.course = course;
     }
 
-    public AssignmentUpload(String AssignmentTitle, String docType, byte[] content, LocalDate dueDate, Course course) {
+    public AssignmentUpload(String AssignmentTitle,
+                            String docType,
+                            byte[] content,
+                            LocalDateTime dueDate,
+                            LocalDateTime uploadTime,
+                            Course course) {
         this.assignmentTitle = AssignmentTitle;
         this.docType = docType;
         this.content = content;
         this.dueDate = dueDate;
+        this.uploadTime = uploadTime;
         this.course = course;
+    }
+
+    public Long getAssignmentUploadId() {
+        return assignmentUploadId;
     }
 
     public String getAssignmentTitle() {
@@ -100,13 +120,22 @@ public class AssignmentUpload {
         this.content = content;
     }
 
-    public LocalDate getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
+
+    public LocalDateTime getUploadTime() {
+        return uploadTime;
+    }
+
+    public LocalDateTime setUploadTime() {
+        return uploadTime;
+    }
+
 
     public List<AssignmentSubmission> getAssignmentSubmissions() {
         return assignmentSubmissions;
@@ -119,11 +148,6 @@ public class AssignmentUpload {
     public void setCourse(Course course) {
         this.course = course;
     }
-
-
-// TODO: SET UPLOAD TIME AND DUE DATE AND TIME REMAINING
-
-
 
 
 }

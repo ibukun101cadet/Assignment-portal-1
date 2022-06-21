@@ -1,4 +1,4 @@
-package org.systemspecs.interns.dto;
+package org.systemspecs.interns.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -53,7 +53,7 @@ public class AssignmentSubmission {
     private String gradingStatus;
 
     @Column(nullable = false)
-    private LocalDateTime lastModified;
+    private String lastModified;
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -74,7 +74,7 @@ public class AssignmentSubmission {
                                 String submissionStatus,
                                 String gradingStatus,
                                 String grade,
-                                LocalDateTime lastModified,
+                                String lastModified,
                                 AssignmentUpload assignmentUpload) {
         this.assignmentSubmissionId = assignmentSubmissionId;
         this.docName= docName;
@@ -96,7 +96,7 @@ public class AssignmentSubmission {
                                 String submissionStatus,
                                 String gradingStatus,
                                 String grade,
-                                LocalDateTime lastModified,
+                                String lastModified,
                                 AssignmentUpload assignmentUpload) {
         this.docName= docName;
         this.matricNo = matricNo;
@@ -142,11 +142,11 @@ public class AssignmentSubmission {
         this.grade = grade;
     }
 
-    public LocalDateTime getLastModified() {
+    public String getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(LocalDateTime lastModified) {
+    public void setLastModified(String lastModified) {
         this.lastModified = lastModified;
     }
 
@@ -189,9 +189,5 @@ public class AssignmentSubmission {
     public void setGradingStatus(String gradingStatus) {
         this.gradingStatus = gradingStatus;
     }
-//TODO: DUE DATE AND CHECK time remaining
-
-
-
 
 }

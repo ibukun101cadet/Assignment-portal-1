@@ -9,13 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.systemspecs.interns.domain.AssignmentSubmission;
 import org.systemspecs.interns.domain.AssignmentUpload;
-import org.systemspecs.interns.dto.ResponseData;
+import org.systemspecs.interns.dto.response.ResponseData;
 import org.systemspecs.interns.dto.response.GenericResponse;
 import org.systemspecs.interns.service.AssignmentSubmissionService;
 import org.systemspecs.interns.service.AssignmentUploadService;
 
 import java.io.IOException;
-import java.util.List;
 
 
 @RestController
@@ -93,7 +92,7 @@ public class AssignmentUploadController {
         response.setMetadata(null);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-        //sa
+
     }
 
 
@@ -110,7 +109,7 @@ public class AssignmentUploadController {
     }
 
     }
-// restrict document types
+
 
 
 

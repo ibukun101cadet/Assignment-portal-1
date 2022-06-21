@@ -1,7 +1,6 @@
 package org.systemspecs.interns.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,9 +8,6 @@ import java.util.List;
 
 
 @Entity
-@Getter
-@Setter
-
 public class Course {
     @SequenceGenerator(
             name = "course_sequence",
@@ -34,9 +30,14 @@ public class Course {
     @Column(nullable = false)
     private Integer credits;
 
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AssignmentUpload> course_assignments;
 
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<AppUser> participants;
 
     public Course() {
     }
@@ -89,5 +90,12 @@ public class Course {
     public List<AssignmentUpload> getCourse_assignments() {
         return course_assignments;
     }
-}
 
+    public List<AppUser> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<AppUser> participants) {
+        this.participants = participants;
+    }
+}

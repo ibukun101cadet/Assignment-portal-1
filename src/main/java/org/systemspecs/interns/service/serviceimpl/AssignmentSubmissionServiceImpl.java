@@ -12,6 +12,7 @@ import org.systemspecs.interns.service.AssignmentSubmissionService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -39,6 +40,11 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
                                                  String matricNo) {
         AssignmentUpload uploaded = assignmentUploadRepo.findById(assignmentId).get();
         AssignmentSubmission assignment = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMM dd,yyyy HH:mm a");
+        //Local date time instance
+        LocalDateTime localDateTime = LocalDateTime.now();
+        //Get formatted String
+        String ldtString = formatter.format(localDateTime);
         try {
             assignment = new AssignmentSubmission(StringUtils.cleanPath(
                     file.getOriginalFilename()),
@@ -48,7 +54,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
                     "Submitted for grading",
                     "Not graded",
                     null,
-                    LocalDateTime.now(),
+                    ldtString,
                     uploaded);
             uploaded.getAssignmentSubmissions().add(assignment);
         } catch (IOException e) {
@@ -56,7 +62,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         }
 
         return assignment;//one to one btwn student?
-        //todo late submission
+        //todo change matno to id
     }
 
 
@@ -100,10 +106,17 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
             throws IOException {
         AssignmentSubmission assignmentSubmission =
                 assignmentSubmissionRepo.findById(assignmentId).get();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm a");
+        //Local date time instance
+        LocalDateTime localDateTime = LocalDateTime.now();
+        //Get formatted String
+        String ldtString = formatter.format(localDateTime);
+
         assignmentSubmission.setDocName(file.getName());
         assignmentSubmission.setDocType(file.getContentType());
         assignmentSubmission.setContent(file.getBytes());
-        assignmentSubmission.setLastModified(LocalDateTime.now());
+        assignmentSubmission.setLastModified(ldtString);
     }
 
     @Override
